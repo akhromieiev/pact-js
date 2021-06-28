@@ -8,7 +8,7 @@ export const createProxyStateHandler =
   (req: express.Request, res: express.Response): Promise<express.Response> => {
     const message: ProviderState = req.body;
 
-    return setupStates(message, config)
+    return Promise.resolve(setupStates(message, config))
       .then((data) => res.json(data))
       .catch((e) => res.status(500).send(e));
   };
