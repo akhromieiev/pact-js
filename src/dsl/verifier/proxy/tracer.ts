@@ -51,8 +51,9 @@ export const createResponseTracer =
       }
       const body = Buffer.concat(chunks).toString('utf8');
       logger.debug(
-        removeEmptyResponseProperties(body, res),
-        'outgoing response'
+        `outgoing response: ${JSON.stringify(
+          removeEmptyResponseProperties(body, res)
+        )}`
       );
       oldEnd.apply(res, [chunk]);
     };
@@ -63,6 +64,8 @@ export const createResponseTracer =
 
 export const createRequestTracer =
   (): express.RequestHandler => (req, _, next) => {
-    logger.debug(removeEmptyRequestProperties(req), 'incoming request');
+    logger.debug(
+      `incoming request: ${JSON.stringify(removeEmptyRequestProperties(req))}`
+    );
     next();
   };
